@@ -28,14 +28,14 @@ def add_item(dataset):
 
     # Iterates through each selection to add new information to the item
     for selection in ["PARTKEY", "NAME", "MFGR", "BRAND", "TYPE", "SIZE", "CONTAINER", "RETAILPRICE", "COMMENT"]:
-        new_item[selection] = input("Enter " + selection)
+        new_item[selection] = input(f'Enter {selection}: ')
 
     # Adds the item to dataset
     dataset.append(new_item)
 
 def search_item(dataset):
     # Searches for item based on attribute, looks for item, then checks if it matches attribute, then prints
-    searched_attribute = input("What attribute would you like to search for? (PARTKEY, NAME, BRAND, or TYPE)")
+    searched_attribute = input("What attribute would you like to search for? (PARTKEY, NAME, BRAND, or TYPE) ")
     searched_value = input(f'Enter value from {searched_attribute} that you want: ')
     for item in dataset:
        if item.get(searched_attribute, "").lower() == searched_value.lower():
@@ -63,20 +63,22 @@ def delete_item(dataset):
 
 def save_dataset(dataset):
     # Re-opens the file for writing
-     with open(filename, "w") as file:
+    with open(filename, "w") as file:
         for item in dataset:
-            # Writes each piece of information back to the file so that it's saved
-            file.write(file.write("|".join([
-                item["PARTKEY"],
-                item["NAME"],
-                item["MFGR"],
-                item["BRAND"],
-                item["TYPE"],
-                item["SIZE"],
-                item["CONTAINER"],
-                item["RETAILPRICE"],
-                item["COMMENT"]
-            ]) + "|\n"))
+            # Creates a row by joining each piece of information together with the pipe-sign 
+            row = "|".join([
+                str(item["PARTKEY"]),
+                str(item["NAME"]),
+                str(item["MFGR"]),
+                str(item["BRAND"]),
+                str(item["TYPE"]),
+                str(item["SIZE"]),
+                str(item["CONTAINER"]),
+                str(item["RETAILPRICE"]),
+                str(item["COMMENT"])
+            ])
+            # Writes the created row back to the file
+            file.write(row + "\n")
 
 def main():
     dataset = open_data()
@@ -100,7 +102,8 @@ def main():
             update_item(dataset)
         elif (answer == "4"):
             delete_item(dataset)
-        elif (answer == "5"):
+        else:
             save_dataset(dataset)
+            break
 
 main()

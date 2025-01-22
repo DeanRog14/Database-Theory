@@ -40,6 +40,8 @@ def search_item(dataset):
     for item in dataset:
        if item.get(searched_attribute, "").lower() == searched_value.lower():
             print(item)
+       else:
+           print(f'The searched {searched_value} value does not exist') 
 
 def update_item(dataset):
     # Finds the specified PARTKEY in the dataset
@@ -55,11 +57,12 @@ def update_item(dataset):
 
 def delete_item(dataset):
     # Finds the specified PARTKEY in the dataset
-    partkey_searched = input("What PARKTEY would like to delete the information from?")
+    partkey_searched = input("What PARKTEY would like to delete the information from? ")
     for item in dataset:
         # Removes the item from the dataset based on the specified PARTKEY
         if item["PARTKEY"] == partkey_searched:
             dataset.remove(item)
+            print(f'{partkey_searched} was removed from the dataset')
 
 def save_dataset(dataset):
     # Re-opens the file for writing
@@ -85,7 +88,7 @@ def main():
 
     while True:
         # Prompts the user to pick which action they want to be done
-        print(" Actions able to be completed ")
+        print("<=== Actions able to be completed ===>")
         print(" 1. Insert new Item")
         print(" 2. Search for am Item")
         print(" 3. Update an Item")
